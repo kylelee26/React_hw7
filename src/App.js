@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(0),
+        width: 200,
+    },
+    textField2: {
+        marginLeft: theme.spacing(0),
+        marginRight: theme.spacing(1),
+        width: 50,
+    },
+}));
+export default function DatePickers() {
+    const classes = useStyles();
+    const [myDate,setMydate] = useState("民國110年-05月-24號")
+    return (
+        <form className={classes.container} noValidate>
+            <TextField value={myDate}
+                id="basic"
+                label="阿公店開店日選擇"
+                className={classes.textField}
+                InputLabelProps={{
+                    shrink: true
+                  }}
+            />
+            <TextField 
+                id="date"
+                label=" "
+                type="date"
+                className={classes.textField2}
+                onChange={event => {
+                    setMydate(Date(event.target.value))
+                }}
+                InputLabelProps={{
+                shrink: true
+                }}
+            />
+            <TextField
+              id="date"
+              label="Birthday"
+              type="date"
+              defaultValue="1921-07-01"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+            }}
+            />
+        </form>
+    );
 }
-
-export default App;
+function Date(date) {
+    const [year, month ,day]=date.split('-')
+        return(`民國 ${year-1911}年-${month}月-${day}號`);
+}
